@@ -53,11 +53,9 @@ class _SignInScreenState extends State<SignInScreen> {
 
     try {
       String inputValue = _inputController.text.trim();
-      String methodText = _selectedMethod.name;
 
       final responseData = await LoginApi.signIn(
-        inputValue: inputValue,
-        method: methodText,
+        mobile: inputValue,
       );
 
       debugPrint("------------ SIGN IN API RESPONSE ------------");
@@ -619,7 +617,7 @@ class _OTPBottomSheetState extends State<OTPBottomSheet> {
           debugPrint("SignInScreen: Token saved: $token");
         }
 
-        String? cusIdFromResponse = responseData['cus_id']?.toString();
+        String? cusIdFromResponse = responseData['cus_id']?.toString() ?? responseData['led_id']?.toString();
         if (cusIdFromResponse != null) {
           await PreferenceService.setCusId(cusIdFromResponse);
         }

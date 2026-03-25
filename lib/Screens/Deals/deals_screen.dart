@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'deal_lost.dart';
 import 'deal_won.dart';
-import '../Lead_Information/enquiry_tabs_view.dart';
 
 class DealsScreen extends StatefulWidget {
   final VoidCallback? onBack;
@@ -152,29 +151,11 @@ class _DealsScreenState extends State<DealsScreen> {
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: Column(
                 children: [
-                  _buildDealCard(
-                    name: 'Arun Kumar',
-                    leadNo: 'L002',
-                    phone: '7894561231',
-                    date: '25/11/2025',
-                    wonBy: 'Nandhini',
-                    screenWidth: screenWidth,
-                  ),
-                  _buildDealCard(
-                    name: 'Kumar',
-                    leadNo: 'L002',
-                    phone: '7894561231',
-                    date: '21/11/2025',
-                    wonBy: 'Kiran',
-                    screenWidth: screenWidth,
-                  ),
-                  _buildDealCard(
-                    name: 'Thanu Sri',
-                    leadNo: 'L006',
-                    phone: '7894561231',
-                    date: '10/11/2025',
-                    wonBy: 'Sowmiya',
-                    screenWidth: screenWidth,
+                  const Center(
+                    child: Padding(
+                      padding: EdgeInsets.all(20.0),
+                      child: Text("No active deals found"),
+                    ),
                   ),
                 ],
               ),
@@ -254,129 +235,6 @@ class _DealsScreenState extends State<DealsScreen> {
             ],
           ),
         ),
-      ),
-    );
-  }
-
-  Widget _buildDealCard({
-    required String name,
-    required String leadNo,
-    required String phone,
-    required String date,
-    required String wonBy,
-    required double screenWidth,
-  }) {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 16),
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Theme.of(context).cardColor,
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: Theme.of(context).dividerColor),
-      ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Image.asset(
-            'assets/icons/call_purple.png',
-             color: const Color(0xFF26A69A),
-            width: screenWidth * 0.06,
-            height: screenWidth * 0.06,
-            errorBuilder: (context, error, stackTrace) => Icon(
-              Icons.phone_callback_rounded,
-              color: const Color(0xFF26A69A),
-              size: screenWidth * 0.06,
-            ),
-          ),
-          const SizedBox(width: 16),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      name,
-                      style: TextStyle(
-                        fontSize: screenWidth * 0.045,
-                        fontWeight: FontWeight.w500,
-                        color: Theme.of(context).textTheme.titleMedium?.color,
-                      ),
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const EnquiryTabsView(
-                              lead: {},
-                              status: 'Deal',
-                            ),
-                          ),
-                        );
-                      },
-                      child: Image.asset(
-                        'assets/icons/green_next.png',
-                        width: screenWidth * 0.06,
-                        height: screenWidth * 0.06,
-                        errorBuilder: (context, error, stackTrace) => Container(
-                          padding: const EdgeInsets.all(4),
-                          decoration: const BoxDecoration(
-                            color: Colors.green,
-                            shape: BoxShape.circle,
-                          ),
-                          child: Icon(
-                            Icons.chevron_right,
-                            color: Colors.white,
-                            size: screenWidth * 0.04,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  leadNo,
-                  style: TextStyle(
-                    fontSize: screenWidth * 0.035,
-                    color: Theme.of(
-                      context,
-                    ).textTheme.bodyMedium?.color?.withValues(alpha: 0.7),
-                  ),
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  phone,
-                  style: TextStyle(
-                    fontSize: screenWidth * 0.04,
-                    fontWeight: FontWeight.w600,
-                    color: Theme.of(context).textTheme.bodyLarge?.color,
-                  ),
-                ),
-                const SizedBox(height: 8),
-                const Divider(height: 1, color: Color(0xFFEEEEEE)),
-                const SizedBox(height: 8),
-                Text(
-                  date,
-                  style: TextStyle(
-                    fontSize: screenWidth * 0.035,
-                    color: Theme.of(context).textTheme.bodySmall?.color,
-                  ),
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  'Deal Won By  $wonBy',
-                  style: TextStyle(
-                    fontSize: screenWidth * 0.035,
-                    color: Theme.of(context).textTheme.bodySmall?.color,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
       ),
     );
   }

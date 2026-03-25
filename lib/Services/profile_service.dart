@@ -10,9 +10,9 @@ class ProfileService {
   static Future<Map<String, dynamic>?> fetchProfileData() async {
     try {
       final String? ledId = await PreferenceService.getLedId();
-      final String deviceId = SplashScreen.deviceId ?? '3423';
-      final String lt = SplashScreen.lt ?? '3232';
-      final String ln = SplashScreen.ln ?? '332';
+      final String deviceId = SplashScreen.deviceId ?? '';
+      final String lt = SplashScreen.lt ?? '';
+      final String ln = SplashScreen.ln ?? '';
 
       if (ledId == null || ledId.isEmpty) {
         debugPrint(
@@ -26,7 +26,8 @@ class ProfileService {
 
       final Map<String, String> body = {
         'type': '2071',
-        'cid': currentCid,
+        'cid': currentCid.isEmpty ? '21472147' : currentCid,
+        'uid': ledId,
         'device_id': deviceId,
         'lt': lt,
         'ln': ln,
@@ -71,9 +72,9 @@ class ProfileService {
   }) async {
     try {
       final String? ledId = await PreferenceService.getLedId();
-      final String deviceId = SplashScreen.deviceId ?? '3423';
-      final String lt = SplashScreen.lt ?? '3232';
-      final String ln = SplashScreen.ln ?? '332';
+      final String deviceId = SplashScreen.deviceId ?? '';
+      final String lt = SplashScreen.lt ?? '';
+      final String ln = SplashScreen.ln ?? '';
 
       if (ledId == null || ledId.isEmpty) {
         debugPrint(
@@ -87,7 +88,8 @@ class ProfileService {
 
       final Map<String, String> body = {
         'type': '3004',
-        'cid': currentCid,
+        'cid': currentCid.isEmpty ? '21472147' : currentCid,
+        'uid': ledId,
         'device_id': deviceId,
         'lt': lt,
         'ln': ln,

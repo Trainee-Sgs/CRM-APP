@@ -11,74 +11,7 @@ class NotificationScreen extends StatefulWidget {
 class _NotificationScreenState extends State<NotificationScreen> {
   String _selectedFilter = 'All';
 
-  final List<Map<String, dynamic>> _allNotifications = [
-    {
-      'title': 'Upcoming Follow-Up Reminder',
-      'description':
-          'Reminder:\nCall Arun Kumar for a product demo at 11:00 AM.',
-      'time': '2 hrs ago',
-      'type': 'Follow-up',
-      'showPhone': true,
-      'phone': '1234567890',
-    },
-    {
-      'title': 'Missed Follow-Up',
-      'description':
-          'You missed your follow-up call with Rahul Sharma, scheduled at 4:00 PM today.',
-      'time': '2 hrs ago',
-      'type': 'Missed',
-      'showPhone': true,
-      'phone': '9876543210',
-    },
-    {
-      'title': 'New Lead Assigned',
-      'description':
-          'You missed your follow-up call with Rahul Sharma, scheduled at 4:00 PM today.',
-      'time': '2 hrs ago',
-      'type': 'Deal',
-      'phone': '9988776655',
-    },
-    {
-      'title': 'New Lead Assigned',
-      'description':
-          'You missed your follow-up call with Rahul Sharma, scheduled at 4:00 PM today.',
-      'time': '2 hrs ago',
-      'type': 'Meeting',
-      'phone': '1122334455',
-    },
-    {
-      'title': 'New Lead Assigned',
-      'description':
-          'You missed your follow-up call with Rahul Sharma, scheduled at 4:00 PM today.',
-      'time': '2 hrs ago',
-      'type': 'Follow-up',
-      'phone': '5566778899',
-    },
-    {
-      'title': 'New Lead Assigned',
-      'description':
-          'You missed your follow-up call with Rahul Sharma, scheduled at 4:00 PM today.',
-      'time': '2 hrs ago',
-      'type': 'Deal',
-      'phone': '4433221100',
-    },
-    {
-      'title': 'New Lead Assigned',
-      'description':
-          'You missed your follow-up call with Rahul Sharma, scheduled at 4:00 PM today.',
-      'time': '2 hrs ago',
-      'type': 'Meeting',
-      'phone': '6677889900',
-    },
-    {
-      'title': 'New Lead Assigned',
-      'description':
-          'You missed your follow-up call with Rahul Sharma, scheduled at 4:00 PM today.',
-      'time': '2 hrs ago',
-      'type': 'Follow-up',
-      'phone': '2233445566',
-    },
-  ];
+  final List<Map<String, dynamic>> _allNotifications = [];
 
   List<Map<String, dynamic>> get _filteredNotifications {
     if (_selectedFilter == 'All') return _allNotifications;

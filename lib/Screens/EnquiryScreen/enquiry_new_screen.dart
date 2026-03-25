@@ -28,24 +28,9 @@ class _EnquiryNewScreenState extends State<EnquiryNewScreen> {
     setState(() => _isLoading = true);
     try {
       final res = await LeadService.fetchLeads(enquiryType: 'Enquiry');
-      final today = DateTime.now().toString().split(' ')[0];
       if (mounted) {
         setState(() {
-          _enquiries = res.where((e) {
-            final date = (e['enquiry_date'] ?? e['entry_date'] ?? '').toString();
-            return date.startsWith(today);
-          }).toList();
-
-          // Add hardcoded example data
-          _enquiries.insert(0, {
-            'le_name': 'Arun Kumar',
-            'mobile_1': '98756 32123',
-            'mobile_2': '98756 32123',
-            'product_service': 'Micro fin soft',
-            'email': 'crmapp@gmail.com',
-            'enquiry_date': today,
-            'id': 'mock_en1',
-          });
+          _enquiries = res;
         });
       }
     } finally {
@@ -91,37 +76,37 @@ class _EnquiryNewScreenState extends State<EnquiryNewScreen> {
                     child: CircularProgressIndicator(color: Color(0xFF26A69A)),
                   )
                 : _enquiries.isEmpty
-                    ? const Center(child: Text("No new enquiries today"))
-                    : Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.symmetric(
-                              horizontal: 16.w,
-                              vertical: 8.h,
-                            ),
-                            child: Text(
-                              'Today Enquiry (${_enquiries.length})',
-                              style: TextStyle(
-                                fontSize: 18.sp,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black,
-                              ),
-                            ),
+                ? const Center(child: Text("No new enquiries today"))
+                : Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 16.w,
+                          vertical: 8.h,
+                        ),
+                        child: Text(
+                          'Today Enquiry (${_enquiries.length})',
+                          style: TextStyle(
+                            fontSize: 18.sp,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
                           ),
-                          Expanded(
-                            child: ListView.builder(
-                              padding: EdgeInsets.symmetric(horizontal: 16.w),
-                              itemCount: _enquiries.length,
-                              itemBuilder: (c, i) => LeadRowCard(
-                                lead: _enquiries[i],
-                                showStatus: false,
-                                onCall: () => _confirmCall(context, _enquiries[i]),
-                              ),
-                            ),
-                          ),
-                        ],
+                        ),
                       ),
+                      Expanded(
+                        child: ListView.builder(
+                          padding: EdgeInsets.symmetric(horizontal: 16.w),
+                          itemCount: _enquiries.length,
+                          itemBuilder: (c, i) => LeadRowCard(
+                            lead: _enquiries[i],
+                            showStatus: false,
+                            onCall: () => _confirmCall(context, _enquiries[i]),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
           ),
         ],
       ),
@@ -145,14 +130,16 @@ class _EnquiryNewScreenState extends State<EnquiryNewScreen> {
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
-                            builder: (c) => const EnquiryFollowUpScreen()),
+                          builder: (c) => const EnquiryFollowUpScreen(),
+                        ),
                       );
                     }
                     if (f == 'Meeting') {
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
-                            builder: (c) => const EnquiryMeetingScreen()),
+                          builder: (c) => const EnquiryMeetingScreen(),
+                        ),
                       );
                     }
                   },
@@ -162,14 +149,18 @@ class _EnquiryNewScreenState extends State<EnquiryNewScreen> {
                       vertical: 8.h,
                     ),
                     decoration: BoxDecoration(
-                      color: f == 'New' ? const Color(0xFF26A69A) : Colors.white,
+                      color: f == 'New'
+                          ? const Color(0xFF26A69A)
+                          : Colors.white,
                       borderRadius: BorderRadius.circular(25.r),
                       border: Border.all(color: const Color(0xFF26A69A)),
                     ),
                     child: Text(
                       f,
                       style: TextStyle(
-                        color: f == 'New' ? Colors.white : const Color(0xFF26A69A),
+                        color: f == 'New'
+                            ? Colors.white
+                            : const Color(0xFF26A69A),
                         fontWeight: FontWeight.w500,
                         fontSize: 14.sp,
                       ),

@@ -27,9 +27,9 @@ class _SplashScreenState extends State<SplashScreen> {
   String _statusMessage = "Initializing...";
 
   // Default values as fallback
-  static const String defaultLt = '23233443';
-  static const String defaultLn = '43432323';
-  static const String defaultDeviceId = '3453489';
+  static const String defaultLt = '';
+  static const String defaultLn = '';
+  static const String defaultDeviceId = '';
 
   @override
   void initState() {

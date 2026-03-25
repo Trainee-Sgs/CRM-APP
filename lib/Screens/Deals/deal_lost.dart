@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'deal_details.dart';
 
 class DealLostScreen extends StatelessWidget {
   const DealLostScreen({super.key});
@@ -17,7 +16,7 @@ class DealLostScreen extends StatelessWidget {
           icon: const Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () => Navigator.pop(context),
         ),
-        title: Text(
+        title: const Text(
           'Deal lost',
           style: TextStyle(
             color: Colors.white,
@@ -79,93 +78,13 @@ class DealLostScreen extends StatelessWidget {
             ),
             const SizedBox(height: 100), // Space for cards
 
-            _buildSectionHeader(context, 'Last week Lossed Deals List'),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Column(
-                children: [
-                  _buildLostDealCard(
-                    context,
-                    name: 'Arun Kumar',
-                    leadNo: 'L002',
-                    phone: '7894561231',
-                    date: '25/11/2025',
-                    wonBy: 'Nandhini',
-                    amount: '₹10,000',
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (_) =>
-                              const DealDetailsScreen(status: 'Lost'),
-                        ),
-                      );
-                    },
-                  ),
-                  _buildLostDealCard(
-                    context,
-                    name: 'Kumar',
-                    leadNo: 'L002',
-                    phone: '7894561231',
-                    date: '21/11/2025',
-                    wonBy: 'Kiran',
-                    amount: '₹20,000',
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (_) =>
-                              const DealDetailsScreen(status: 'Lost'),
-                        ),
-                      );
-                    },
-                  ),
-                ],
-              ),
-            ),
-
-            _buildSectionHeader(context, 'Last Month Lossed Deals List'),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Column(
-                children: [
-                  _buildLostDealCard(
-                    context,
-                    name: 'Thanu Sri',
-                    leadNo: 'L006',
-                    phone: '7894561231',
-                    date: '10/11/2025',
-                    wonBy: 'Sowmiya',
-                    amount: '₹30,000',
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (_) =>
-                              const DealDetailsScreen(status: 'Lost'),
-                        ),
-                      );
-                    },
-                  ),
-                  _buildLostDealCard(
-                    context,
-                    name: 'Yalini',
-                    leadNo: 'L0014',
-                    phone: '7894561231',
-                    date: '02/10/2025',
-                    wonBy: 'Kiran',
-                    amount: '₹10,000',
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (_) =>
-                              const DealDetailsScreen(status: 'Lost'),
-                        ),
-                      );
-                    },
-                  ),
-                ],
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16),
+              child: Center(
+                child: Padding(
+                  padding: EdgeInsets.all(32.0),
+                  child: Text("No lost deals found"),
+                ),
               ),
             ),
 
@@ -187,7 +106,7 @@ class DealLostScreen extends StatelessWidget {
           borderRadius: BorderRadius.circular(16),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withValues(alpha: 0.1),
+              color: Colors.black.withOpacity(0.1),
               blurRadius: 10,
               offset: const Offset(0, 4),
             ),
@@ -220,142 +139,6 @@ class DealLostScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildSectionHeader(BuildContext context, String title) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 24, 16, 16),
-      child: Text(
-        title,
-        style: TextStyle(
-          fontSize: 18,
-          fontWeight: FontWeight.bold,
-          color: Theme.of(context).textTheme.titleLarge?.color,
-        ),
-      ),
-    );
-  }
-
-  Widget _buildLostDealCard(
-    BuildContext context, {
-    required String name,
-    required String leadNo,
-    required String phone,
-    required String date,
-    required String wonBy,
-    required String amount,
-    required VoidCallback onTap,
-  }) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        margin: const EdgeInsets.only(bottom: 16),
-        padding: const EdgeInsets.all(16),
-        decoration: BoxDecoration(
-          color: Theme.of(context).cardColor,
-          borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: Theme.of(context).dividerColor),
-        ),
-        child: Stack(
-          children: [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  padding: const EdgeInsets.all(8),
-                  decoration: BoxDecoration(
-                    color: Colors.red.withValues(alpha: 0.1),
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: const Icon(
-                    Icons.trending_down,
-                    color: Colors.red,
-                    size: 24,
-                  ),
-                ),
-                const SizedBox(width: 16),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        name,
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          color: Theme.of(context).textTheme.titleLarge?.color,
-                        ),
-                      ),
-                      const SizedBox(height: 4),
-                      Text(
-                        leadNo,
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: Theme.of(
-                            context,
-                          ).textTheme.bodyMedium?.color?.withValues(alpha: 0.7),
-                        ),
-                      ),
-                      const SizedBox(height: 4),
-                      Text(
-                        phone,
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: Theme.of(context).textTheme.bodyLarge?.color,
-                        ),
-                      ),
-                      const SizedBox(height: 8),
-                      Divider(height: 1, color: Theme.of(context).dividerColor),
-                      const SizedBox(height: 8),
-                      Text(
-                        date,
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: Theme.of(context).textTheme.bodySmall?.color,
-                        ),
-                      ),
-                      const SizedBox(height: 4),
-                      Text(
-                        'Deal Won By  $wonBy',
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: Theme.of(context).textTheme.bodySmall?.color,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-            Positioned(
-              top: 0,
-              right: 0,
-              child: Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 12,
-                  vertical: 6,
-                ),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8),
-                  border: Border.all(
-                    color: const Color(0xFFFFA095).withValues(alpha: 0.5),
-                  ),
-                ),
-                child: Text(
-                  amount,
-                  style: const TextStyle(
-                    color: Color(0xFFFFA095),
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16,
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
   Widget _buildReasonSection(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -367,7 +150,7 @@ class DealLostScreen extends StatelessWidget {
           border: Border.all(color: Theme.of(context).dividerColor),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withValues(alpha: 0.02),
+              color: Colors.black.withOpacity(0.02),
               blurRadius: 10,
               offset: const Offset(0, 4),
             ),

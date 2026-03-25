@@ -40,16 +40,25 @@ class EnquiryOverviewDetailView extends StatelessWidget {
   }
 
   Widget _buildMainCard(BuildContext context, double screenWidth) {
-    final name = (lead?['le_name'] ?? lead?['cus_name'] ?? 'Harish').toString();
+    final name = (lead?['le_name'] ??
+            lead?['cus_name'] ??
+            lead?['contact_person'] ??
+            'N/A')
+        .toString();
     final priority = (lead?['priority'] ?? lead?['priority_name'] ?? 'High')
         .toString();
-    final currentStatus = (lead?['lead_type'] ?? 'Qualified').toString();
-    final company =
-        (lead?['company_name'] ?? lead?['comany_name'] ?? 'HM Tech Solutions')
-            .toString();
-    final email = (lead?['email'] ?? 'hmtechsolutions@gmail.com').toString();
-    final phone = (lead?['mobile_1'] ?? '+91 98765 43210').toString();
-    final phone2 = (lead?['mobile_2'] ?? '+91 98765 43210').toString();
+    final currentStatus = (lead?['lead_type'] ??
+            lead?['lead_status'] ??
+            lead?['status'] ??
+            'New')
+        .toString();
+    final company = (lead?['comany_name'] ??
+            lead?['company_name'] ??
+            'SGS')
+        .toString();
+    final email = (lead?['email'] ?? '').toString();
+    final phone = (lead?['mobile_1'] ?? '').toString();
+    final phone2 = (lead?['mobile_2'] ?? '').toString();
     // final nri = (lead?['is_nri'] ?? 'Yes').toString();
 
     // Address Info
@@ -59,14 +68,12 @@ class EnquiryOverviewDetailView extends StatelessWidget {
     final pincode = (lead?['pincode'] ?? '641107').toString();
 
     // Lead Details
-    final created =
-        (lead?['enquiry_date'] ?? lead?['entry_date'] ?? '1/10/2024')
-            .toString();
-    final source = (lead?['source_name'] ?? 'Google').toString();
-    final leadStatus = (lead?['lead_status'] ?? lead?['status'] ?? 'Booked')
-        .toString();
-    final remarks = (lead?['remarks'] ?? 'He is okay to deal with us')
-        .toString();
+    final created = (lead?['enquiry_date'] ?? lead?['entry_date'] ?? '').toString();
+    final source = (lead?['lead_source'] ?? lead?['source_name'] ?? 'Walk-in').toString();
+    final leadStatus = (lead?['lead_status'] ?? lead?['status'] ?? 'Booked').toString();
+    final reqNotes = (lead?['requirement_notes'] ?? '').toString();
+    final remarks = (lead?['remarks'] ?? '').toString();
+    final budget = (lead?['budget'] ?? '').toString();
 
     return Container(
       decoration: BoxDecoration(
@@ -188,6 +195,8 @@ class EnquiryOverviewDetailView extends StatelessWidget {
           _buildDetailRow('Created', created),
           _buildDetailRow('Source', source),
           _buildDetailRow('Status', leadStatus, valueColor: Colors.green),
+          _buildDetailRow('Budget', budget),
+          _buildDetailRow('Requirement', reqNotes),
           _buildDetailRow('Remarks', remarks),
           const Divider(height: 32),
           const SizedBox(height: 24),

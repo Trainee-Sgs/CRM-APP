@@ -41,18 +41,6 @@ class _MeetingLeadScreenState extends State<MeetingLeadScreen> {
                     .contains('meeting'),
               )
               .toList();
-
-          // Add hardcoded example data
-          _leads.insert(0, {
-            'le_name': 'Arun Kumar',
-            'mobile_1': '98756 32123',
-            'mobile_2': '98756 32123',
-            'product_service': 'Micro fin soft',
-            'email': 'crmapp@gmail.com',
-            'meeting_date': '16 March 2026',
-            'lead_status': 'Meeting',
-            'id': 'mock_m1',
-          });
         });
       }
     } catch (e) {
