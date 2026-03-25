@@ -41,18 +41,6 @@ class _FollowUpLeadScreenState extends State<FollowUpLeadScreen> {
                     .contains('follow'),
               )
               .toList();
-
-          // Add hardcoded example data
-          _leads.insert(0, {
-            'le_name': 'Arun Kumar',
-            'mobile_1': '98756 32123',
-            'mobile_2': '98756 32123',
-            'product_service': 'Micro fin soft',
-            'email': 'crmapp@gmail.com',
-            'enquiry_date': '16 March 2026',
-            'lead_status': 'Follow up',
-            'id': 'mock_f1',
-          });
         });
       }
     } catch (e) {

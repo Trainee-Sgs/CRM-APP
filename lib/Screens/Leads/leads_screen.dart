@@ -47,10 +47,17 @@ class _LeadsScreenState extends State<LeadsScreen> {
   List<dynamic> get _filteredLeads {
     if (_searchQuery.isEmpty) return _allLeads;
     return _allLeads.where((l) {
-      final n = (l['le_name'] ?? l['cus_name'] ?? '').toString().toLowerCase();
+      final n = (l['le_name'] ??
+              l['cus_name'] ??
+              l['contact_person'] ??
+              '')
+          .toString()
+          .toLowerCase();
+      final req = (l['requirement_notes'] ?? '').toString().toLowerCase();
       final p = (l['mobile_1'] ?? l['mobile_2'] ?? '').toString().toLowerCase();
       return n.contains(_searchQuery.toLowerCase()) ||
-          p.contains(_searchQuery.toLowerCase());
+          p.contains(_searchQuery.toLowerCase()) ||
+          req.contains(_searchQuery.toLowerCase());
     }).toList();
   }
 

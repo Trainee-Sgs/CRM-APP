@@ -79,7 +79,7 @@ class MyApp extends StatelessWidget {
               color: const Color(0xFF1E1E1E),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),
-                side: BorderSide(color: Colors.grey.withOpacity(0.1)),
+                side: BorderSide(color: Colors.grey.withValues(alpha: 0.1)),
               ),
             ),
             listTileTheme: const ListTileThemeData(

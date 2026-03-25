@@ -18,18 +18,25 @@ class LeadRowCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final name = (lead['le_name'] ?? lead['cus_name'] ?? 'Arun Kumar')
+    final name = (lead['le_name'] ??
+            lead['cus_name'] ??
+            lead['contact_person'] ??
+            'N/A')
         .toString();
-    final p1 = (lead['mobile_1'] ?? '98756 32123').toString();
-    final p2 = (lead['mobile_2'] ?? '98756 32123').toString();
-    final service =
-        (lead['product_service'] ??
-                lead['required_project'] ??
-                'Micro fin soft')
-            .toString();
-    final email = (lead['email'] ?? 'crmapp@gmail.com').toString();
-    final date = (lead['enquiry_date'] ?? '16 March 2026').toString();
-    final displayStatus = (lead['lead_type'] ?? lead['lead_status'] ?? lead['status'] ?? 'New').toString();
+    final p1 = (lead['mobile_1'] ?? '').toString();
+    final p2 = (lead['mobile_2'] ?? '').toString();
+    final service = (lead['product_service'] ??
+            lead['required_project'] ??
+            lead['requirement_notes'] ??
+            'N/A')
+        .toString();
+    final email = (lead['email'] ?? '').toString();
+    final date = (lead['enquiry_date'] ?? lead['entry_date'] ?? '').toString();
+    final displayStatus = (lead['lead_type'] ??
+            lead['lead_status'] ??
+            lead['status'] ??
+            'New')
+        .toString();
 
     return GestureDetector(
       onTap: () {

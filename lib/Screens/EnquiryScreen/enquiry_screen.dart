@@ -33,17 +33,6 @@ class _EnquiryScreenState extends State<EnquiryScreen> {
       if (mounted) {
         setState(() {
           _enquiries = res;
-          // Add hardcoded example data
-          _enquiries.insert(0, {
-            'le_name': 'Arun Kumar',
-            'mobile_1': '98756 32123',
-            'mobile_2': '98756 32123',
-            'product_service': 'Micro fin soft',
-            'email': 'crmapp@gmail.com',
-            'enquiry_date': '16 March 2026',
-            'lead_type': 'Qualified',
-            'id': 'mock_e1',
-          });
         });
       }
     } finally {

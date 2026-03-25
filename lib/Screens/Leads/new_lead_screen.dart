@@ -30,27 +30,9 @@ class _NewLeadScreenState extends State<NewLeadScreen> {
     setState(() => _isLoading = true);
     try {
       final res = await LeadService.fetchLeads(enquiryType: 'Lead');
-      String today = DateTime.now().toString().split(' ')[0];
       if (mounted) {
         setState(() {
-          _leads = res
-              .where(
-                (l) => (l['enquiry_date'] ?? l['entry_date'] ?? '')
-                    .toString()
-                    .startsWith(today),
-              )
-              .toList();
-
-          // Add hardcoded example data
-          _leads.insert(0, {
-            'le_name': 'Arun Kumar',
-            'mobile_1': '98756 32123',
-            'mobile_2': '98756 32123',
-            'product_service': 'Micro fin soft',
-            'email': 'crmapp@gmail.com',
-            'enquiry_date': '16 March 2026',
-            'id': 'mock_1',
-          });
+          _leads = res;
         });
       }
     } catch (e) {

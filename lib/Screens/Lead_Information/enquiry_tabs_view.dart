@@ -32,8 +32,8 @@ class _EnquiryTabsViewState extends State<EnquiryTabsView>
 
   Future<void> _fetch() async {
     setState(() => _isLoading = true);
-    final id = (widget.lead['id'] ?? widget.lead['led_id'] ?? '').toString();
-    final uid = (widget.lead['uid'] ?? widget.lead['id'] ?? '').toString();
+    final id = (widget.lead['cus_id'] ?? widget.lead['id'] ?? widget.lead['led_id'] ?? '').toString();
+    final uid = (widget.lead['uid'] ?? widget.lead['id'] ?? widget.lead['cus_id'] ?? '').toString();
 
     if (id.isNotEmpty) {
       _timelineData = await LeadService.fetchFollowUpHistory(leadNo: id);

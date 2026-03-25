@@ -38,20 +38,21 @@ class LeadService {
     required String leadNo,
   }) async {
     try {
-      String deviceId = SplashScreen.deviceId ?? '3453489';
-      String ln = SplashScreen.ln ?? '43432323';
-      String lt = SplashScreen.lt ?? '23233443';
+      String deviceId = SplashScreen.deviceId ?? '';
+      String ln = SplashScreen.ln ?? '';
+      String lt = SplashScreen.lt ?? '';
 
       String currentCid = await PreferenceService.getCid();
       String? token = await PreferenceService.getToken();
+      String? ledId = await PreferenceService.getLedId();
 
       final Map<String, String> body = {
         'type': '3005',
-        'cid': currentCid,
+        'cid': currentCid.isEmpty ? '21472147' : currentCid,
         'lt': lt,
         'ln': ln,
         'device_id': deviceId,
-        'uid': '002', // Assuming UID 002 based on previous grep for 3003
+        'uid': ledId ?? '',
         'no': leadNo,
         if (token != null) 'token': token,
       };
@@ -96,16 +97,18 @@ class LeadService {
     String apiType = '3011',
   }) async {
     try {
-      String deviceId = SplashScreen.deviceId ?? '3453489';
-      String ln = SplashScreen.ln ?? '43432323';
-      String lt = SplashScreen.lt ?? '23233443';
+      String deviceId = SplashScreen.deviceId ?? '';
+      String ln = SplashScreen.ln ?? '';
+      String lt = SplashScreen.lt ?? '';
 
       String currentCid = await PreferenceService.getCid();
       String? token = await PreferenceService.getToken();
+      String? ledId = await PreferenceService.getLedId();
 
       final Map<String, String> body = {
         'type': apiType,
-        'cid': currentCid,
+        'cid': currentCid.isEmpty ? '21472147' : currentCid,
+        'uid': ledId ?? '',
         'lt': lt,
         'ln': ln,
         'device_id': deviceId,
@@ -139,9 +142,9 @@ class LeadService {
 
   static Future<List<dynamic>> fetchLeads({required String enquiryType}) async {
     try {
-      String deviceId = SplashScreen.deviceId ?? '3453489';
-      String ln = SplashScreen.ln ?? '43432323';
-      String lt = SplashScreen.lt ?? '23233443';
+      String deviceId = SplashScreen.deviceId ?? '';
+      String ln = SplashScreen.ln ?? '';
+      String lt = SplashScreen.lt ?? '';
 
       String currentCid = await PreferenceService.getCid();
       if (currentCid.isEmpty) currentCid = '21472147';
@@ -160,12 +163,13 @@ class LeadService {
 
       final Map<String, String> body = {
         'type': apiType,
-        'cid': currentCid,
+        'cid': currentCid.isEmpty ? '21472147' : currentCid,
+        'uid': ledId ?? '',
         'lt': lt,
         'ln': ln,
         'device_id': deviceId,
-        'enquiry_type': enquiryType,
-        'led_id': ledId ?? '33',
+        'enquiry_type': enquiryType.toLowerCase(),
+        'led_id': ledId ?? '',
         if (token != null) 'token': token,
       };
 
@@ -208,9 +212,9 @@ class LeadService {
 
   static Future<List<dynamic>> fetchFollowUpHistoryAll() async {
     try {
-      String deviceId = SplashScreen.deviceId ?? '1234';
-      String ln = SplashScreen.ln ?? '123';
-      String lt = SplashScreen.lt ?? '456';
+      String deviceId = SplashScreen.deviceId ?? '';
+      String ln = SplashScreen.ln ?? '';
+      String lt = SplashScreen.lt ?? '';
 
       String currentCid = await PreferenceService.getCid();
       String? token = await PreferenceService.getToken();
@@ -218,8 +222,9 @@ class LeadService {
 
       final Map<String, String> body = {
         'type': '3016',
-        'cid': currentCid,
-        'led_id': ledId ?? '33',
+        'cid': currentCid.isEmpty ? '21472147' : currentCid,
+        'led_id': ledId ?? '',
+        'uid': ledId ?? '',
         'lt': lt,
         'ln': ln,
         'device_id': deviceId,
@@ -257,9 +262,9 @@ class LeadService {
 
   static Future<List<dynamic>> fetchCallSummary(String uid) async {
     try {
-      String deviceId = SplashScreen.deviceId ?? '1234';
-      String ln = SplashScreen.ln ?? '123';
-      String lt = SplashScreen.lt ?? '456';
+      String deviceId = SplashScreen.deviceId ?? '';
+      String ln = SplashScreen.ln ?? '';
+      String lt = SplashScreen.lt ?? '';
 
       String currentCid = await PreferenceService.getCid();
       String? token = await PreferenceService.getToken();
@@ -267,8 +272,8 @@ class LeadService {
 
       final Map<String, String> body = {
         'type': '3023',
-        'cid': currentCid,
-        'led_id': ledId ?? '33',
+        'cid': currentCid.isEmpty ? '21472147' : currentCid,
+        'led_id': ledId ?? '',
         'uid': uid,
         'lt': lt,
         'ln': ln,
@@ -307,9 +312,9 @@ class LeadService {
     Map<String, dynamic> followUpData,
   ) async {
     try {
-      String deviceId = SplashScreen.deviceId ?? '3453489';
-      String ln = SplashScreen.ln ?? '43432323';
-      String lt = SplashScreen.lt ?? '23233443';
+      String deviceId = SplashScreen.deviceId ?? '';
+      String ln = SplashScreen.ln ?? '';
+      String lt = SplashScreen.lt ?? '';
 
       String currentCid = await PreferenceService.getCid();
       String? token = await PreferenceService.getToken();
@@ -322,7 +327,7 @@ class LeadService {
 
       final Map<String, String> body = {
         'type': '3008',
-        'cid': currentCid,
+        'cid': currentCid.isEmpty ? '21472147' : currentCid,
         'led_id': (userLedId ?? '').toString(),
         if (leadIdFromData != null && leadIdFromData != 'null')
           'no': leadIdFromData,
@@ -365,9 +370,9 @@ class LeadService {
     Map<String, dynamic> followUpData,
   ) async {
     try {
-      String deviceId = SplashScreen.deviceId ?? '3453489';
-      String ln = SplashScreen.ln ?? '43432323';
-      String lt = SplashScreen.lt ?? '23233443';
+      String deviceId = SplashScreen.deviceId ?? '';
+      String ln = SplashScreen.ln ?? '';
+      String lt = SplashScreen.lt ?? '';
 
       String currentCid = await PreferenceService.getCid();
       String? token = await PreferenceService.getToken();
@@ -380,7 +385,7 @@ class LeadService {
 
       final Map<String, String> body = {
         'type': '3017',
-        'cid': currentCid,
+        'cid': currentCid.isEmpty ? '21472147' : currentCid,
         'led_id': (userLedId ?? '').toString(),
         'id': (recordId ?? '').toString(),
         'lt': lt,
@@ -422,16 +427,18 @@ class LeadService {
 
   static Future<List<dynamic>> fetchDropdownData({required String type}) async {
     try {
-      String deviceId = SplashScreen.deviceId ?? '1234';
-      String ln = SplashScreen.ln ?? '123';
-      String lt = SplashScreen.lt ?? '456';
+      String deviceId = SplashScreen.deviceId ?? '';
+      String ln = SplashScreen.ln ?? '';
+      String lt = SplashScreen.lt ?? '';
 
       String currentCid = await PreferenceService.getCid();
       String? token = await PreferenceService.getToken();
+      String? ledId = await PreferenceService.getLedId();
 
       final Map<String, String> body = {
         'type': type,
-        'cid': currentCid,
+        'cid': currentCid.isEmpty ? '21472147' : currentCid,
+        'uid': ledId ?? '',
         'lt': lt,
         'ln': ln,
         'device_id': deviceId,
@@ -474,9 +481,9 @@ class LeadService {
 
   static Future<List<dynamic>> fetchMeetings() async {
     try {
-      String deviceId = SplashScreen.deviceId ?? '3453489';
-      String ln = SplashScreen.ln ?? '43432323';
-      String lt = SplashScreen.lt ?? '23233443';
+      String deviceId = SplashScreen.deviceId ?? '';
+      String ln = SplashScreen.ln ?? '';
+      String lt = SplashScreen.lt ?? '';
 
       String currentCid = await PreferenceService.getCid();
       String? token = await PreferenceService.getToken();
@@ -484,13 +491,13 @@ class LeadService {
 
       final Map<String, String> body = {
         'type': '3027',
-        'cid': currentCid,
+        'cid': currentCid.isEmpty ? '21472147' : currentCid,
         'lt': lt,
         'ln': ln,
         'device_id': deviceId,
-        'uid': ledId ?? '52', // Using ledId as uid or default 52
-        'led_id': ledId ?? '33', // Default to 33 as seen in other methods
-        'enquiry_type': '1', // Default to 1 as provided in user request
+        'uid': ledId ?? '',
+        'led_id': ledId ?? '',
+        'enquiry_type': '1',
         if (token != null) 'token': token,
       };
 
@@ -500,7 +507,9 @@ class LeadService {
 
       final response = await http.post(Uri.parse(_apiUrl), body: body);
 
-      debugPrint("------------ FETCH MEETINGS API RESPONSE (3027) ------------");
+      debugPrint(
+        "------------ FETCH MEETINGS API RESPONSE (3027) ------------",
+      );
       debugPrint("STATUS: ${response.statusCode}");
       debugPrint("BODY: ${response.body}");
 

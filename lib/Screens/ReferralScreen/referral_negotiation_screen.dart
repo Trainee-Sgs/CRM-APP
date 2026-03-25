@@ -35,17 +35,6 @@ class _ReferralNegotiationScreenState extends State<ReferralNegotiationScreen> {
                 .toLowerCase();
             return status.contains('negotiation');
           }).toList();
-
-          // Add hardcoded example data
-          _referrals.insert(0, {
-            'le_name': 'Arun Kumar',
-            'mobile_1': '98756 32123',
-            'mobile_2': '98756 32123',
-            'product_service': 'Micro fin soft',
-            'email': 'crmapp@gmail.com',
-            'enquiry_date': '17 March 2026',
-            'id': 'mock_rn1',
-          });
         });
       }
     } finally {
