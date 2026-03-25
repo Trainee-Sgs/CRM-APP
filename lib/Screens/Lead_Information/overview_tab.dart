@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../../Widgets/quick_action_button.dart';
 
 class EnquiryOverviewDetailView extends StatelessWidget {
-  final Map<String, dynamic>? lead;
+  final dynamic lead;
   const EnquiryOverviewDetailView({super.key, this.lead});
 
   @override

@@ -86,37 +86,29 @@ class _ReferralFollowUpScreenState extends State<ReferralFollowUpScreen> {
                     child: CircularProgressIndicator(color: Color(0xFF26A69A)),
                   )
                 : _referrals.isEmpty
-                    ? const Center(child: Text("No follow up referrals found"))
-                    : Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.symmetric(
-                              horizontal: 16.w,
-                              vertical: 8.h,
-                            ),
-                            child: Text(
-                              'Follow up Referral (${_referrals.length})',
-                              style: TextStyle(
-                                fontSize: 18.sp,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black,
-                              ),
-                            ),
-                          ),
-                          Expanded(
-                            child: ListView.builder(
-                              padding: EdgeInsets.symmetric(horizontal: 16.w),
-                              itemCount: _referrals.length,
-                              itemBuilder: (c, i) => LeadRowCard(
-                                lead: _referrals[i],
-                                showStatus: false,
-                                onCall: () => _confirmCall(context, _referrals[i]),
-                              ),
-                            ),
-                          ),
-                        ],
+                ? const Center(child: Text("No follow up referrals found"))
+                : Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 16.w,
+                          vertical: 8.h,
+                        ),
                       ),
+                      Expanded(
+                        child: ListView.builder(
+                          padding: EdgeInsets.symmetric(horizontal: 16.w),
+                          itemCount: _referrals.length,
+                          itemBuilder: (c, i) => LeadRowCard(
+                            lead: _referrals[i],
+                            showStatus: false,
+                            onCall: () => _confirmCall(context, _referrals[i]),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
           ),
         ],
       ),
@@ -140,14 +132,16 @@ class _ReferralFollowUpScreenState extends State<ReferralFollowUpScreen> {
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
-                            builder: (c) => const ReferralNewScreen()),
+                          builder: (c) => const ReferralNewScreen(),
+                        ),
                       );
                     }
                     if (f == 'Meeting') {
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
-                            builder: (c) => const ReferralMeetingScreen()),
+                          builder: (c) => const ReferralMeetingScreen(),
+                        ),
                       );
                     }
                   },
@@ -157,8 +151,9 @@ class _ReferralFollowUpScreenState extends State<ReferralFollowUpScreen> {
                       vertical: 8.h,
                     ),
                     decoration: BoxDecoration(
-                      color:
-                          f == 'Follow up' ? const Color(0xFF26A69A) : Colors.white,
+                      color: f == 'Follow up'
+                          ? const Color(0xFF26A69A)
+                          : Colors.white,
                       borderRadius: BorderRadius.circular(25.r),
                       border: Border.all(color: const Color(0xFF26A69A)),
                     ),

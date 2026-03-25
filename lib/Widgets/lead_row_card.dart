@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../Screens/Lead_Information/enquiry_tabs_view.dart';
 
 class LeadRowCard extends StatelessWidget {
-  final Map<String, dynamic> lead;
+  final dynamic lead;
   final VoidCallback onCall;
   final bool showCall;
   final bool showStatus;
@@ -29,7 +29,9 @@ class LeadRowCard extends StatelessWidget {
             .toString();
     final email = (lead['email'] ?? 'crmapp@gmail.com').toString();
     final date = (lead['enquiry_date'] ?? '16 March 2026').toString();
-    final displayStatus = (lead['lead_type'] ?? lead['lead_status'] ?? lead['status'] ?? 'New').toString();
+    final displayStatus =
+        (lead['lead_type'] ?? lead['lead_status'] ?? lead['status'] ?? 'New')
+            .toString();
 
     return GestureDetector(
       onTap: () {
@@ -41,16 +43,20 @@ class LeadRowCard extends StatelessWidget {
         );
       },
       child: Container(
-        margin: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
-        padding: EdgeInsets.all(12.r),
+        margin: EdgeInsets.symmetric(
+          horizontal: 16.w,
+          vertical: 4.h,
+        ), // Reduced vertical margin
+        padding: EdgeInsets.all(8.r), // Reduced padding
         decoration: BoxDecoration(
           color: const Color(0xFFF5F5F5),
-          borderRadius: BorderRadius.circular(12.r),
+          border: Border.all(color: const Color(0xFF26A69A), width: 1.r),
+          borderRadius: BorderRadius.circular(10.r), // Slightly smaller radius
           boxShadow: [
             BoxShadow(
               color: Colors.black.withValues(alpha: 0.08),
-              blurRadius: 8.r,
-              offset: Offset(0, 2.h),
+              blurRadius: 4.r, // Reduced blur
+              offset: Offset(0, 1.h),
             ),
           ],
         ),
@@ -64,93 +70,125 @@ class LeadRowCard extends StatelessWidget {
                   children: [
                     Icon(
                       Icons.person_outline,
-                      size: 22.r,
+                      size: 18.r, // Reduced icon size
                       color: Colors.black,
                     ),
-                    SizedBox(width: 12.w),
+                    SizedBox(width: 8.w), // Reduced width
                     Text(
                       name,
                       style: TextStyle(
-                        fontSize: 18.sp,
+                        fontSize: 15.sp, // Reduced font size
                         fontWeight: FontWeight.bold,
                         color: Colors.black,
                       ),
                     ),
                   ],
                 ),
-                if (showStatus)
-                  Row(
-                    children: [
-                      Icon(
-                        Icons.fiber_manual_record,
-                        size: 10.r,
-                        color: const Color(0xFF2E7D32),
-                      ),
-                      SizedBox(width: 4.w),
-                      Text(
-                        displayStatus,
-                        style: TextStyle(
-                          fontSize: 16.sp,
-                          fontWeight: FontWeight.bold,
+                Row(
+                  children: [
+                    if (showStatus)
+                      Container(
+                        margin: EdgeInsets.only(right: 8.w),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 10.w,
+                          vertical: 4.h,
+                        ),
+                        decoration: BoxDecoration(
                           color: const Color(0xFF2E7D32),
+                          borderRadius: BorderRadius.circular(20.r),
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Icon(
+                              Icons.fiber_manual_record,
+                              size: 8.r,
+                              color: Colors.white,
+                            ),
+                            SizedBox(width: 4.w),
+                            Text(
+                              displayStatus,
+                              style: TextStyle(
+                                fontSize: 11.sp,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                    ],
-                  ),
+                  ],
+                ),
               ],
             ),
-            SizedBox(height: 8.h),
+            SizedBox(height: 4.h), // Reduced height
             // Phone 1
             _item(Icons.phone_outlined, p1, const Color(0xFF2E7D32)),
             // Phone 2
             _item(Icons.phone_outlined, p2, const Color(0xFF2E7D32)),
             // Service
             _item(Icons.headset_mic_outlined, service, const Color(0xFFEF6C00)),
-            // Email with Chevron
-            Row(
-              children: [
-                Icon(Icons.mail_outline, size: 18.r, color: Colors.black),
-                SizedBox(width: 12.w),
-                Expanded(
-                  child: Text(
-                    email,
-                    style: TextStyle(color: Colors.black, fontSize: 14.sp),
+            // Email
+            _item(Icons.mail_outline, email, Colors.black),
+            // Date and Call Button Row
+            Padding(
+              padding: EdgeInsets.only(bottom: 2.h),
+              child: Row(
+                children: [
+                  Icon(
+                    Icons.calendar_today_outlined,
+                    size: 16.r,
+                    color: const Color(0xFF3949AB),
                   ),
-                ),
-                Icon(Icons.chevron_right, size: 18.r, color: Colors.black),
-              ],
-            ),
-            SizedBox(height: 8.h),
-            // Date
-            _item(Icons.calendar_today_outlined, date, const Color(0xFF3949AB)),
-            // Call Button
-            if (showCall)
-              GestureDetector(
-                onTap: onCall,
-                child: Container(
-                  margin: EdgeInsets.only(top: 12.h),
-                  padding: EdgeInsets.symmetric(vertical: 8.h),
-                  decoration: BoxDecoration(
-                    color: const Color(0xFF2E7D32),
-                    borderRadius: BorderRadius.circular(8.r),
+                  SizedBox(width: 8.w),
+                  Expanded(
+                    child: Text(
+                      date,
+                      style: TextStyle(
+                        color: const Color(0xFF3949AB),
+                        fontSize: 12.sp, // Reduced font size
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
                   ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(Icons.call, color: Colors.white, size: 18.r),
-                      SizedBox(width: 8.w),
-                      Text(
-                        'Call Now',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 14.sp,
+                  if (showCall)
+                    GestureDetector(
+                      onTap: onCall,
+                      child: Container(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 10.w,
+                          vertical: 4.h,
+                        ),
+                        decoration: BoxDecoration(
+                          color: const Color(0xFF2E7D32),
+                          borderRadius: BorderRadius.circular(6.r),
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Icon(Icons.call, color: Colors.white, size: 14.r),
+                            SizedBox(width: 4.w),
+                            Text(
+                              'Call',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 11.sp, // Reduced font size
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                    ],
+                    ),
+                  SizedBox(width: 8.w),
+                  Icon(
+                    Icons.chevron_right,
+                    size: 22.r,
+                    color: const Color(0xFF3949AB), // Color matches the date
                   ),
-                ),
+                ],
               ),
+            ),
           ],
         ),
       ),
@@ -159,21 +197,21 @@ class LeadRowCard extends StatelessWidget {
 
   Widget _item(IconData icon, String text, Color color) {
     return Padding(
-      padding: EdgeInsets.only(bottom: 6.h),
+      padding: EdgeInsets.only(bottom: 4.h), // Reduced padding
       child: Row(
         children: [
           Icon(
             icon,
-            size: 18.r,
-            color: color == Colors.black ? Colors.black : color,
+            size: 16.r, // Reduced icon size
+            color: color == Colors.black ? Colors.black87 : color,
           ),
-          SizedBox(width: 12.w),
+          SizedBox(width: 8.w), // Reduced width
           Expanded(
             child: Text(
               text,
               style: TextStyle(
                 color: color,
-                fontSize: 14.sp,
+                fontSize: 12.sp, // Reduced font size from 14.sp
                 fontWeight: color == Colors.black
                     ? FontWeight.normal
                     : FontWeight.w500,

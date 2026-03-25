@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import '../Screens/SignIn/splash.dart';
 import 'preference_service.dart';
+import '../Models/leads_model.dart';
 
 class LeadService {
   static const String _apiUrl = 'https://erpsmart.in/total/api/m_api/';
@@ -137,7 +138,7 @@ class LeadService {
     }
   }
 
-  static Future<List<dynamic>> fetchLeads({required String enquiryType}) async {
+  static Future<List<LeadDetail>> fetchLeads({required String enquiryType}) async {
     try {
       String deviceId = SplashScreen.deviceId ?? '3453489';
       String ln = SplashScreen.ln ?? '43432323';
@@ -164,8 +165,8 @@ class LeadService {
         'lt': lt,
         'ln': ln,
         'device_id': deviceId,
-        'enquiry_type': enquiryType,
-        'led_id': ledId ?? '33',
+        'enquiry_type': enquiryType.toLowerCase(),
+        'uid': ledId ?? '33', // User ID param is 'uid' as per latest requirement
         if (token != null) 'token': token,
       };
 
@@ -193,11 +194,15 @@ class LeadService {
         }
 
         final Map<String, dynamic> data = json.decode(bodyText);
+        final leadResp = LeadResponse.fromJson(data);
 
-        if (data['error'] == false && data['details'] != null) {
-          return List<dynamic>.from(data['details']);
+        if (!leadResp.error) {
+          debugPrint(
+            "SUCCESS: Fetched ${leadResp.details.length} leads for $enquiryType",
+          );
+          return leadResp.details;
         } else {
-          debugPrint("API Error: ${data['error_msg'] ?? 'Unknown error'}");
+          debugPrint("API Error: Error flag is true in response");
         }
       }
     } catch (e) {

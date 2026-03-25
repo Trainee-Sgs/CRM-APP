@@ -32,17 +32,7 @@ class _ReferralScreenState extends State<ReferralScreen> {
       final res = await LeadService.fetchLeads(enquiryType: 'Referral');
       if (mounted) {
         setState(() {
-          _referrals = res;
-          // Add hardcoded example data
-          _referrals.insert(0, {
-            'le_name': 'Arun Kumar',
-            'mobile_1': '98756 32123',
-            'mobile_2': '98756 32123',
-            'product_service': 'Micro fin soft',
-            'email': 'crmapp@gmail.com',
-            'enquiry_date': '17 March 2026',
-            'id': 'mock_r1',
-          });
+          _referrals = List<dynamic>.from(res);
         });
       }
     } finally {
@@ -97,14 +87,6 @@ class _ReferralScreenState extends State<ReferralScreen> {
                               horizontal: 16.w,
                               vertical: 8.h,
                             ),
-                            child: Text(
-                              'Total Referral (${_referrals.length})',
-                              style: TextStyle(
-                                fontSize: 18.sp,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black,
-                              ),
-                            ),
                           ),
                           Expanded(
                             child: ListView.builder(
@@ -148,7 +130,10 @@ class _ReferralScreenState extends State<ReferralScreen> {
                           ? const Color(0xFF26A69A)
                           : Colors.white,
                       borderRadius: BorderRadius.circular(25.r),
-                      border: Border.all(color: const Color(0xFF26A69A)),
+                      border: Border.all(
+                        color: const Color(0xFF26A69A),
+                        width: 1.5.r,
+                      ),
                     ),
                     child: Text(
                       f,

@@ -32,18 +32,7 @@ class _EnquiryScreenState extends State<EnquiryScreen> {
       final res = await LeadService.fetchLeads(enquiryType: 'Enquiry');
       if (mounted) {
         setState(() {
-          _enquiries = res;
-          // Add hardcoded example data
-          _enquiries.insert(0, {
-            'le_name': 'Arun Kumar',
-            'mobile_1': '98756 32123',
-            'mobile_2': '98756 32123',
-            'product_service': 'Micro fin soft',
-            'email': 'crmapp@gmail.com',
-            'enquiry_date': '16 March 2026',
-            'lead_type': 'Qualified',
-            'id': 'mock_e1',
-          });
+          _enquiries = List<dynamic>.from(res);
         });
       }
     } finally {
@@ -98,14 +87,6 @@ class _EnquiryScreenState extends State<EnquiryScreen> {
                               horizontal: 16.w,
                               vertical: 8.h,
                             ),
-                            child: Text(
-                              'Total Enquiry (${_enquiries.length})',
-                              style: TextStyle(
-                                fontSize: 18.sp,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black,
-                              ),
-                            ),
                           ),
                           Expanded(
                             child: ListView.builder(
@@ -149,7 +130,10 @@ class _EnquiryScreenState extends State<EnquiryScreen> {
                           ? const Color(0xFF26A69A)
                           : Colors.white,
                       borderRadius: BorderRadius.circular(25.r),
-                      border: Border.all(color: const Color(0xFF26A69A)),
+                      border: Border.all(
+                        color: const Color(0xFF26A69A),
+                        width: 1.5.r,
+                      ),
                     ),
                     child: Text(
                       f,

@@ -31,21 +31,13 @@ class _EnquiryNewScreenState extends State<EnquiryNewScreen> {
       final today = DateTime.now().toString().split(' ')[0];
       if (mounted) {
         setState(() {
-          _enquiries = res.where((e) {
-            final date = (e['enquiry_date'] ?? e['entry_date'] ?? '').toString();
-            return date.startsWith(today);
-          }).toList();
-
-          // Add hardcoded example data
-          _enquiries.insert(0, {
-            'le_name': 'Arun Kumar',
-            'mobile_1': '98756 32123',
-            'mobile_2': '98756 32123',
-            'product_service': 'Micro fin soft',
-            'email': 'crmapp@gmail.com',
-            'enquiry_date': today,
-            'id': 'mock_en1',
-          });
+          _enquiries = List<dynamic>.from(
+            res.where((e) {
+              final date =
+                  (e['enquiry_date'] ?? e['entry_date'] ?? '').toString();
+              return date.startsWith(today);
+            }),
+          );
         });
       }
     } finally {
@@ -99,14 +91,6 @@ class _EnquiryNewScreenState extends State<EnquiryNewScreen> {
                             padding: EdgeInsets.symmetric(
                               horizontal: 16.w,
                               vertical: 8.h,
-                            ),
-                            child: Text(
-                              'Today Enquiry (${_enquiries.length})',
-                              style: TextStyle(
-                                fontSize: 18.sp,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black,
-                              ),
                             ),
                           ),
                           Expanded(
@@ -164,7 +148,10 @@ class _EnquiryNewScreenState extends State<EnquiryNewScreen> {
                     decoration: BoxDecoration(
                       color: f == 'New' ? const Color(0xFF26A69A) : Colors.white,
                       borderRadius: BorderRadius.circular(25.r),
-                      border: Border.all(color: const Color(0xFF26A69A)),
+                      border: Border.all(
+                        color: const Color(0xFF26A69A),
+                        width: 1.5.r,
+                      ),
                     ),
                     child: Text(
                       f,
@@ -183,7 +170,7 @@ class _EnquiryNewScreenState extends State<EnquiryNewScreen> {
     );
   }
 
-  void _confirmCall(BuildContext context, Map<String, dynamic> lead) {
+  void _confirmCall(BuildContext context, dynamic lead) {
     showModalBottomSheet(
       context: context,
       backgroundColor: Colors.transparent,

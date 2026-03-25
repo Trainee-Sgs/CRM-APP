@@ -100,14 +100,6 @@ class _ReferralMeetingScreenState extends State<ReferralMeetingScreen> {
                               horizontal: 16.w,
                               vertical: 8.h,
                             ),
-                            child: Text(
-                              'Meeting Referral (${_referrals.length})',
-                              style: TextStyle(
-                                fontSize: 18.sp,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black,
-                              ),
-                            ),
                           ),
                           Expanded(
                             child: ListView.builder(

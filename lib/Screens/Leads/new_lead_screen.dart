@@ -33,24 +33,15 @@ class _NewLeadScreenState extends State<NewLeadScreen> {
       String today = DateTime.now().toString().split(' ')[0];
       if (mounted) {
         setState(() {
-          _leads = res
-              .where(
-                (l) => (l['enquiry_date'] ?? l['entry_date'] ?? '')
-                    .toString()
-                    .startsWith(today),
-              )
-              .toList();
+          _leads = List<dynamic>.from(
+            res.where(
+              (l) => (l['enquiry_date'] ?? l['entry_date'] ?? '')
+                  .toString()
+                  .startsWith(today),
+            ),
+          );
 
-          // Add hardcoded example data
-          _leads.insert(0, {
-            'le_name': 'Arun Kumar',
-            'mobile_1': '98756 32123',
-            'mobile_2': '98756 32123',
-            'product_service': 'Micro fin soft',
-            'email': 'crmapp@gmail.com',
-            'enquiry_date': '16 March 2026',
-            'id': 'mock_1',
-          });
+          // No hardcoded data here anymore
         });
       }
     } catch (e) {
@@ -170,12 +161,9 @@ class _NewLeadScreenState extends State<NewLeadScreen> {
                           padding: const EdgeInsets.symmetric(horizontal: 16),
                           itemCount: _leads.length,
                           itemBuilder: (c, i) => LeadRowCard(
-                            lead: _leads[i] as Map<String, dynamic>,
+                            lead: _leads[i],
                             showStatus: false,
-                            onCall: () => _confirmCall(
-                              context,
-                              _leads[i] as Map<String, dynamic>,
-                            ),
+                            onCall: () => _confirmCall(context, _leads[i]),
                           ),
                         ),
                       ),
@@ -247,7 +235,7 @@ class _NewLeadScreenState extends State<NewLeadScreen> {
     );
   }
 
-  void _confirmCall(BuildContext context, Map<String, dynamic> lead) {
+  void _confirmCall(BuildContext context, dynamic lead) {
     showModalBottomSheet(
       context: context,
       backgroundColor: Colors.transparent,

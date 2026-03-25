@@ -5,7 +5,7 @@ import 'call_summary_tab.dart';
 import '../../Services/lead_service.dart';
 
 class EnquiryTabsView extends StatefulWidget {
-  final Map<String, dynamic> lead;
+  final dynamic lead;
   final String status;
   const EnquiryTabsView({super.key, required this.lead, required this.status});
 

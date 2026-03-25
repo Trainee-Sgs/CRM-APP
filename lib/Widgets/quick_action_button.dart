@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class QuickActionButton extends StatefulWidget {
-  final Map<String, dynamic>? lead;
+  final dynamic lead;
   const QuickActionButton({super.key, this.lead});
 
   @override

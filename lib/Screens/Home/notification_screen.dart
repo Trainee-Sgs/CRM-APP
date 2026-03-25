@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class NotificationScreen extends StatefulWidget {
@@ -157,7 +158,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
           // Filter Chips
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
-            padding: const EdgeInsets.symmetric(horizontal: 16),
+            padding: EdgeInsets.symmetric(horizontal: 16.w),
             child: Row(
               children: [
                 _buildFilterChip('All'),
@@ -168,27 +169,31 @@ class _NotificationScreenState extends State<NotificationScreen> {
               ],
             ),
           ),
-          const SizedBox(height: 24),
+          SizedBox(height: 24.h),
           // Latest Notification Header & Pick Date
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            child: Wrap(
+              spacing: 8,
+              runSpacing: 12,
+              alignment: WrapAlignment.spaceBetween,
+              crossAxisAlignment: WrapCrossAlignment.center,
               children: [
-                const Text(
+                Text(
                   'Latest Notification',
                   style: TextStyle(
-                    fontSize: 18,
+                    fontSize: 18.sp,
                     fontWeight: FontWeight.w600,
                     color: Colors.black,
                   ),
                 ),
                 Row(
+                  mainAxisSize: MainAxisSize.min,
                   children: [
-                    const Text(
+                    Text(
                       'Sort by Date ',
                       style: TextStyle(
-                        fontSize: 13,
+                        fontSize: 12.sp,
                         color: Colors.black,
                         fontWeight: FontWeight.w400,
                       ),
@@ -196,27 +201,27 @@ class _NotificationScreenState extends State<NotificationScreen> {
                     GestureDetector(
                       onTap: _selectDate,
                       child: Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 10,
-                          vertical: 9,
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 10.w,
+                          vertical: 8.h,
                         ),
                         decoration: BoxDecoration(
                           color: const Color(0xFF26A69A),
-                          borderRadius: BorderRadius.circular(6),
+                          borderRadius: BorderRadius.circular(6.r),
                         ),
-                        child: const Row(
+                        child: Row(
                           children: [
                             Icon(
                               Icons.calendar_month,
-                              size: 16,
+                              size: 16.r,
                               color: Colors.white,
                             ),
-                            SizedBox(width: 4),
+                            SizedBox(width: 4.w),
                             Text(
                               'Pick Date',
                               style: TextStyle(
                                 color: Colors.white,
-                                fontSize: 13,
+                                fontSize: 13.sp,
                                 fontWeight: FontWeight.w500,
                               ),
                             ),
@@ -265,11 +270,11 @@ class _NotificationScreenState extends State<NotificationScreen> {
         });
       },
       child: Container(
-        margin: const EdgeInsets.only(right: 8),
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        margin: EdgeInsets.only(right: 8.w),
+        padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
         decoration: BoxDecoration(
           color: isSelected ? const Color(0xFF26A69A) : Colors.white,
-          borderRadius: BorderRadius.circular(25),
+          borderRadius: BorderRadius.circular(25.r),
           border: Border.all(color: const Color(0xFF26A69A)),
         ),
         child: Text(
@@ -277,6 +282,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
           style: TextStyle(
             color: isSelected ? Colors.white : const Color(0xFF26A69A),
             fontWeight: FontWeight.w500,
+            fontSize: 14.sp,
           ),
         ),
       ),
@@ -291,11 +297,11 @@ class _NotificationScreenState extends State<NotificationScreen> {
     VoidCallback? onCallTap,
   }) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 12),
-      padding: const EdgeInsets.all(16),
+      margin: EdgeInsets.only(bottom: 12.h),
+      padding: EdgeInsets.all(16.r),
       decoration: BoxDecoration(
         color: const Color(0xFFF9EFFF),
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(12.r),
         border: Border.all(color: const Color(0xFFD1C4E9)),
       ),
       child: Column(
@@ -303,57 +309,57 @@ class _NotificationScreenState extends State<NotificationScreen> {
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Expanded(
                 child: Text(
                   title,
-                  style: const TextStyle(
-                    fontSize: 16,
+                  style: TextStyle(
+                    fontSize: 16.sp,
                     fontWeight: FontWeight.bold,
-                    color: Color(0xFF333333),
+                    color: const Color(0xFF333333),
                   ),
                 ),
               ),
+              SizedBox(width: 8.w),
               Text(
                 time,
-                style: const TextStyle(
-                  fontSize: 12,
-                  color: Color(0xFF666666),
+                style: TextStyle(
+                  fontSize: 12.sp,
+                  color: const Color(0xFF666666),
                   fontStyle: FontStyle.italic,
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 8),
+          SizedBox(height: 8.h),
           Row(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Expanded(
                 child: Text(
                   description,
-                  style: const TextStyle(
-                    fontSize: 14,
-                    color: Color(0xFF555555),
+                  style: TextStyle(
+                    fontSize: 14.sp,
+                    color: const Color(0xFF555555),
                     height: 1.4,
                   ),
                 ),
               ),
-              if (showPhone)
+              if (showPhone) ...[
+                SizedBox(width: 12.w),
                 GestureDetector(
                   onTap: onCallTap,
                   child: Container(
-                    padding: const EdgeInsets.all(8),
+                    padding: EdgeInsets.all(8.r),
                     decoration: const BoxDecoration(
                       color: Colors.green,
                       shape: BoxShape.circle,
                     ),
-                    child: const Icon(
-                      Icons.call,
-                      color: Colors.white,
-                      size: 20,
-                    ),
+                    child: Icon(Icons.call, color: Colors.white, size: 20.r),
                   ),
                 ),
+              ],
             ],
           ),
         ],

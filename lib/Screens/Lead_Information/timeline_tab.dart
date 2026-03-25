@@ -7,7 +7,7 @@ class EnquiryTimelineTab extends StatelessWidget {
   final VoidCallback? onAddActivity;
   final ValueChanged<bool>? onEditModeChanged;
 
-  final Map<String, dynamic>? lead;
+  final dynamic lead;
 
   const EnquiryTimelineTab({
     super.key,
@@ -25,8 +25,8 @@ class EnquiryTimelineTab extends StatelessWidget {
     }
 
     // Hardcoded example data as requested
-    final List<Map<String, dynamic>> displayData = timelineData.isNotEmpty
-        ? timelineData.cast<Map<String, dynamic>>()
+    final List<dynamic> displayData = timelineData.isNotEmpty
+        ? timelineData
         : [
             {
               'call_date': '2025-12-08',
@@ -127,7 +127,7 @@ class EnquiryTimelineTab extends StatelessWidget {
 
   Widget _buildTimelineItem(
     BuildContext context,
-    Map<String, dynamic> activity,
+    dynamic activity,
     bool isLast,
   ) {
     final date = (activity['call_date'] ?? '').toString();

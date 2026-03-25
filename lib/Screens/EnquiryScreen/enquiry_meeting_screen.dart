@@ -31,8 +31,9 @@ class _EnquiryMeetingScreenState extends State<EnquiryMeetingScreen> {
       if (mounted) {
         setState(() {
           _enquiries = res.where((e) {
-            String status =
-                (e['lead_status'] ?? e['status'] ?? '').toString().toLowerCase();
+            String status = (e['lead_status'] ?? e['status'] ?? '')
+                .toString()
+                .toLowerCase();
             return status.contains('meeting');
           }).toList();
 
@@ -91,16 +92,16 @@ class _EnquiryMeetingScreenState extends State<EnquiryMeetingScreen> {
                     child: CircularProgressIndicator(color: Color(0xFF26A69A)),
                   )
                 : _enquiries.isEmpty
-                    ? const Center(child: Text("No meeting enquiries found"))
-                    : ListView.builder(
-                        padding: EdgeInsets.symmetric(horizontal: 16.w),
-                        itemCount: _enquiries.length,
-                        itemBuilder: (c, i) => LeadRowCard(
-                          lead: _enquiries[i],
-                          showStatus: false,
-                          onCall: () => _confirmCall(context, _enquiries[i]),
-                        ),
-                      ),
+                ? const Center(child: Text("No meeting enquiries found"))
+                : ListView.builder(
+                    padding: EdgeInsets.symmetric(horizontal: 16.w),
+                    itemCount: _enquiries.length,
+                    itemBuilder: (c, i) => LeadRowCard(
+                      lead: _enquiries[i],
+                      showStatus: false,
+                      onCall: () => _confirmCall(context, _enquiries[i]),
+                    ),
+                  ),
           ),
         ],
       ),
@@ -124,14 +125,16 @@ class _EnquiryMeetingScreenState extends State<EnquiryMeetingScreen> {
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
-                            builder: (c) => const EnquiryNewScreen()),
+                          builder: (c) => const EnquiryNewScreen(),
+                        ),
                       );
                     }
                     if (f == 'Follow up') {
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
-                            builder: (c) => const EnquiryFollowUpScreen()),
+                          builder: (c) => const EnquiryFollowUpScreen(),
+                        ),
                       );
                     }
                   },
@@ -141,16 +144,21 @@ class _EnquiryMeetingScreenState extends State<EnquiryMeetingScreen> {
                       vertical: 8.h,
                     ),
                     decoration: BoxDecoration(
-                      color:
-                          f == 'Meeting' ? const Color(0xFF26A69A) : Colors.white,
+                      color: f == 'Meeting'
+                          ? const Color(0xFF26A69A)
+                          : Colors.white,
                       borderRadius: BorderRadius.circular(25.r),
-                      border: Border.all(color: const Color(0xFF26A69A)),
+                      border: Border.all(
+                        color: const Color(0xFF26A69A),
+                        width: 1.5.r,
+                      ),
                     ),
                     child: Text(
                       f,
                       style: TextStyle(
-                        color:
-                            f == 'Meeting' ? Colors.white : const Color(0xFF26A69A),
+                        color: f == 'Meeting'
+                            ? Colors.white
+                            : const Color(0xFF26A69A),
                         fontWeight: FontWeight.w500,
                         fontSize: 14.sp,
                       ),

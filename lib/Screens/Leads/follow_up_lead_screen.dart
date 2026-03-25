@@ -162,14 +162,9 @@ class _FollowUpLeadScreenState extends State<FollowUpLeadScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                        child: Text(
-                          'Follow up lead',
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
-                          ),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 8,
                         ),
                       ),
                       Expanded(
@@ -263,7 +258,9 @@ class _FollowUpLeadScreenState extends State<FollowUpLeadScreen> {
         onCancel: () => Navigator.pop(c),
         onConfirm: () async {
           Navigator.pop(c);
-          final p = lead['mobile_1']?.toString().replaceAll(RegExp(r'[^\d+]'), '') ?? '';
+          final p =
+              lead['mobile_1']?.toString().replaceAll(RegExp(r'[^\d+]'), '') ??
+              '';
           if (p.isNotEmpty) {
             final uri = Uri.parse('tel:$p');
             if (await canLaunchUrl(uri)) await launchUrl(uri);

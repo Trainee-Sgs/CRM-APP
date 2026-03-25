@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CallConfirmationPopup extends StatelessWidget {
-  final Map<String, dynamic> lead;
+  final dynamic lead;
   final VoidCallback onConfirm;
   final VoidCallback onCancel;
 

@@ -36,7 +36,7 @@ class _LeadsScreenState extends State<LeadsScreen> {
     setState(() => _isLoading = true);
     try {
       final leads = await LeadService.fetchLeads(enquiryType: 'Lead');
-      if (mounted) setState(() => _allLeads = leads);
+      if (mounted) setState(() => _allLeads = List<dynamic>.from(leads));
     } catch (e) {
       debugPrint("Error: $e");
     } finally {
@@ -186,14 +186,6 @@ class _LeadsScreenState extends State<LeadsScreen> {
                           horizontal: 16.w,
                           vertical: 8.h,
                         ),
-                        child: Text(
-                          'All Lead',
-                          style: TextStyle(
-                            fontSize: 18.sp,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
-                          ),
-                        ),
                       ),
                       Expanded(
                         child: ListView.builder(
@@ -203,10 +195,8 @@ class _LeadsScreenState extends State<LeadsScreen> {
                             lead: _filteredLeads[i],
                             showStatus: true,
                             showCall: false,
-                            onCall: () => _confirmCall(
-                              context,
-                              _filteredLeads[i] as Map<String, dynamic>,
-                            ),
+                            onCall: () =>
+                                _confirmCall(context, _filteredLeads[i]),
                           ),
                         ),
                       ),
@@ -270,7 +260,10 @@ class _LeadsScreenState extends State<LeadsScreen> {
                           ? const Color(0xFF26A69A)
                           : Colors.white,
                       borderRadius: BorderRadius.circular(25.r),
-                      border: Border.all(color: const Color(0xFF26A69A)),
+                      border: Border.all(
+                        color: const Color(0xFF26A69A),
+                        width: 1.5.r,
+                      ),
                     ),
                     child: Text(
                       f,
@@ -291,7 +284,7 @@ class _LeadsScreenState extends State<LeadsScreen> {
     );
   }
 
-  void _confirmCall(BuildContext context, Map<String, dynamic> lead) {
+  void _confirmCall(BuildContext context, dynamic lead) {
     showModalBottomSheet(
       context: context,
       backgroundColor: Colors.transparent,

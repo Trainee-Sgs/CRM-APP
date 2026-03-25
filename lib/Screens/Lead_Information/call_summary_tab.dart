@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../Widgets/quick_action_button.dart';
 
 class EnquirySummaryTab extends StatelessWidget {
-  final Map<String, dynamic>? lead;
+  final dynamic lead;
   final List<dynamic> callSummaryData;
   final bool isLoading;
   final String? selectedStatus;
@@ -27,9 +27,6 @@ class EnquirySummaryTab extends StatelessWidget {
       );
     }
 
-    // App Signature Color (Teal)
-    const Color primaryColor = Color(0xFF26A69A);
-
     // Dynamic Mock Data bound to the current lead
     final String currentClient =
         (lead?['le_name'] ?? lead?['cus_name'] ?? 'Client').toString();
@@ -49,7 +46,7 @@ class EnquirySummaryTab extends StatelessWidget {
         'project_name': currentProject,
         'project_budget': currentBudget,
         'meeting_type': 'Virtual Meeting',
-        'meeting_link': 'https://meet.google.com/abc-defg-hij',
+        'meeting_platform': 'Google Meet',
         'call_summary':
             'Discussed the primary requirements for $currentProject. The client is satisfied with the initial demo and budget alignment.',
         'next_followup_mode': 'Video Call',
@@ -117,31 +114,14 @@ class EnquirySummaryTab extends StatelessWidget {
       );
     }
 
-    // Find the latest virtual meeting for the spotlight
-    final lastVirtual = displayData.firstWhere(
-      (e) => e['meeting_type'] == 'Virtual Meeting',
-      orElse: () => null,
-    );
-
     return Stack(
       children: [
-        Positioned(
-          left: 47.w,
-          top: lastVirtual != null ? 180.h : 0,
-          bottom: 0,
-          child: Container(
-            width: 1.5.w,
-            color: primaryColor.withValues(alpha: 0.1),
-          ),
-        ),
-        ListView(
-          padding: EdgeInsets.symmetric(vertical: 24.h),
-          children: [
-            if (lastVirtual != null) _buildVirtualMeetingSpotlight(lastVirtual),
-            ...displayData.map(
-              (call) => _buildProfessionalCallCard(context, call),
-            ),
-          ],
+        ListView.builder(
+          padding: EdgeInsets.fromLTRB(16.w, 8.h, 16.w, 100.h),
+          itemCount: displayData.length,
+          itemBuilder: (context, index) {
+            return _buildPremiumInteractionCard(context, displayData[index]);
+          },
         ),
         Positioned(
           bottom: 24.h,
@@ -152,567 +132,287 @@ class EnquirySummaryTab extends StatelessWidget {
     );
   }
 
-  Widget _buildVirtualMeetingSpotlight(Map<String, dynamic> meeting) {
-    const Color primaryColor = Color(0xFF26A69A);
-    final clientName = meeting['client_name'] ?? 'N/A';
-    final status = meeting['client_status'] ?? 'Active';
-    final date = meeting['call_date'] ?? 'N/A';
-    final time = meeting['call_time'] ?? 'N/A';
-
-    return Container(
-      margin: EdgeInsets.symmetric(horizontal: 24.w, vertical: 20.h),
-      decoration: BoxDecoration(
-        color: const Color(0xFFE0F2F1),
-        borderRadius: BorderRadius.circular(28.r),
-        boxShadow: [
-          BoxShadow(
-            color: primaryColor.withValues(alpha: 0.08),
-            blurRadius: 20.r,
-            offset: Offset(0, 10.h),
-          ),
-        ],
-      ),
-      child: Column(
-        children: [
-          // High-Intensity Header Card
-          Container(
-            padding: EdgeInsets.all(20.r),
-            decoration: BoxDecoration(
-              gradient: const LinearGradient(
-                colors: [Color(0xFF26A69A), Color(0xFF00796B)],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              ),
-              borderRadius: BorderRadius.circular(28.r),
-              boxShadow: [
-                BoxShadow(
-                  color: primaryColor.withValues(alpha: 0.2),
-                  blurRadius: 12.r,
-                  offset: Offset(0, 6.h),
-                ),
-              ],
-            ),
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        Container(
-                          padding: EdgeInsets.all(8.r),
-                          decoration: BoxDecoration(
-                            color: Colors.white.withValues(alpha: 0.15),
-                            shape: BoxShape.circle,
-                          ),
-                          child: Icon(
-                            Icons.videocam_rounded,
-                            color: Colors.white,
-                            size: 24.r,
-                          ),
-                        ),
-                        SizedBox(width: 12.w),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'VIRTUAL',
-                              style: TextStyle(
-                                color: Colors.white.withValues(alpha: 0.7),
-                                fontSize: 9.sp,
-                                fontWeight: FontWeight.w900,
-                                letterSpacing: 1.2,
-                              ),
-                            ),
-                            Text(
-                              'CONNECT',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 13.sp,
-                                fontWeight: FontWeight.bold,
-                                letterSpacing: 0.5,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                    // Glass Box for Date & Time (2 lines)
-                    Container(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 16.w,
-                        vertical: 10.h,
-                      ),
-                      decoration: BoxDecoration(
-                        color: Colors.white.withValues(alpha: 0.2),
-                        borderRadius: BorderRadius.circular(16.r),
-                        border: Border.all(
-                          color: Colors.white.withValues(alpha: 0.3),
-                        ),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Icon(
-                                Icons.calendar_today,
-                                color: Colors.white,
-                                size: 12.r,
-                              ),
-                              SizedBox(width: 6.w),
-                              Text(
-                                date,
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 10.sp,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ],
-                          ),
-                          SizedBox(height: 4.h),
-                          Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Icon(
-                                Icons.access_time_filled,
-                                color: Colors.white,
-                                size: 12.r,
-                              ),
-                              SizedBox(width: 6.w),
-                              Text(
-                                time,
-                                style: TextStyle(
-                                  color: Colors.white.withValues(alpha: 0.9),
-                                  fontSize: 10.sp,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 24.h),
-                // Client Spotlight Row
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      child: Text(
-                        clientName,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 22.sp,
-                          fontWeight: FontWeight.w900,
-                          letterSpacing: 0.5,
-                        ),
-                      ),
-                    ),
-                    Container(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 14.w,
-                        vertical: 6.h,
-                      ),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(10.r),
-                        boxShadow: [
-                          BoxShadow(color: Colors.black12, blurRadius: 4.r),
-                        ],
-                      ),
-                      child: Text(
-                        status.toUpperCase(),
-                        style: TextStyle(
-                          color: primaryColor,
-                          fontSize: 10.sp,
-                          fontWeight: FontWeight.w900,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildProfessionalCallCard(
+  Widget _buildPremiumInteractionCard(
     BuildContext context,
-    Map<String, dynamic> call,
+    dynamic call,
   ) {
     const Color primaryColor = Color(0xFF26A69A);
-    const Color lightTeal = Color(0xFFE0F2F1);
 
     final date = (call['call_date'] ?? 'N/A').toString();
     final time = (call['call_time'] ?? '').toString();
     final outcome = (call['call_outcome_name'] ?? call['call_outcome'] ?? 'N/A')
         .toString();
     final summary = (call['call_summary'] ?? '').toString();
-    final clientName =
-        (call['client_name'] ?? lead?['le_name'] ?? lead?['cus_name'] ?? 'N/A')
-            .toString();
     final projectName =
         (lead?['product_service'] ??
                 lead?['required_project'] ??
                 'General Inquiry')
             .toString();
-
-    // Budget Detail
     final budget = (call['project_budget'] ?? lead?['budget'] ?? '₹0')
         .toString();
-
     final meetingType = (call['meeting_type'] ?? 'Call').toString();
     final location = (call['location'] ?? '').toString();
-    final meetingLink = (call['meeting_link'] ?? '').toString();
+    final meetingPlatform = (call['meeting_platform'] ?? '').toString();
 
     // Next Follow-up Data
-    final nextMode = (call['next_followup_mode'] ?? 'Video Call').toString();
+    final nextMode = (call['next_followup_mode'] ?? '').toString();
     final nextDate = (call['next_followup_date'] ?? '').toString();
     final nextTime = (call['next_followup_time'] ?? '').toString();
 
     IconData headerIcon = Icons.call_rounded;
     String modeName = 'Voice Call';
+    Color accentColor = const Color(0xFF1B7BBC); // Blue for call
 
     if (meetingType == 'Direct Meeting') {
-      headerIcon = Icons.holiday_village_rounded;
+      headerIcon = Icons.location_on_rounded;
       modeName = 'Direct Meeting';
+      accentColor = const Color(0xFFE91E63); // Pink for meeting
     } else if (meetingType == 'Virtual Meeting') {
       headerIcon = Icons.videocam_rounded;
       modeName = 'Virtual Meeting';
+      accentColor = const Color(0xFF9C27B0); // Purple for virtual
     }
 
-    return Padding(
-      padding: EdgeInsets.only(left: 32.w, right: 16.w, bottom: 24.h),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Marker
-          Container(
-            margin: EdgeInsets.only(top: 18.h),
-            width: 32.w,
-            height: 32.w,
-            decoration: BoxDecoration(
-              color: primaryColor,
-              shape: BoxShape.circle,
-              boxShadow: [
-                BoxShadow(
-                  color: primaryColor.withValues(alpha: 0.2),
-                  blurRadius: 10.r,
-                  spreadRadius: 2.r,
-                ),
-              ],
-            ),
-            child: Icon(headerIcon, size: 14.r, color: Colors.white),
+    return Container(
+      margin: EdgeInsets.only(bottom: 20.h),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(20.r),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.05),
+            blurRadius: 15.r,
+            offset: Offset(0, 8.h),
           ),
-          SizedBox(width: 16.w),
-          // Clean Professional Card
-          Expanded(
-            child: Container(
+        ],
+      ),
+      child: IntrinsicHeight(
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            // Left Accent Bar with Icon
+            Container(
+              width: 50.w,
               decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(24.r),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withValues(alpha: 0.04),
-                    blurRadius: 15.r,
-                    offset: Offset(0, 5.h),
+                color: accentColor.withValues(alpha: 0.1),
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(20.r),
+                  bottomLeft: Radius.circular(20.r),
+                ),
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(headerIcon, size: 20.r, color: accentColor),
+                  SizedBox(height: 12.h),
+                  RotatedBox(
+                    quarterTurns: 3,
+                    child: Text(
+                      modeName.toUpperCase(),
+                      style: TextStyle(
+                        color: accentColor,
+                        fontSize: 8.sp,
+                        fontWeight: FontWeight.w900,
+                        letterSpacing: 1.5,
+                      ),
+                    ),
                   ),
                 ],
-                border: Border.all(color: Colors.grey.shade100),
               ),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(24.r),
+            ),
+            // Main Content Area
+            Expanded(
+              child: Padding(
+                padding: EdgeInsets.all(16.r),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // Lightweight Header - FIXED OVERFLOW
-                    Container(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 16.w,
-                        vertical: 10.h,
-                      ),
-                      color: lightTeal,
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: Text(
-                              modeName.toUpperCase(),
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
+                    // Header Date & Status
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [
+                            Icon(
+                              Icons.calendar_today_rounded,
+                              size: 14.r,
+                              color: Colors.grey.shade400,
+                            ),
+                            SizedBox(width: 6.w),
+                            Text(
+                              "$date ${time.isNotEmpty ? '@ $time' : ''}",
                               style: TextStyle(
-                                color: primaryColor,
-                                fontWeight: FontWeight.w900,
-                                fontSize: 9.sp,
-                                letterSpacing: 1.2,
+                                fontSize: 11.sp,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.grey.shade600,
                               ),
                             ),
+                          ],
+                        ),
+                        Container(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 10.w,
+                            vertical: 4.h,
                           ),
-                          SizedBox(width: 12.w),
-                          Flexible(
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Icon(
-                                  Icons.calendar_month_rounded,
-                                  size: 14.r,
-                                  color: primaryColor,
-                                ),
-                                SizedBox(width: 4.w),
-                                Flexible(
-                                  child: Text(
-                                    date,
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: TextStyle(
-                                      color: primaryColor,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 10.sp,
-                                    ),
-                                  ),
-                                ),
-                                if (time.isNotEmpty) ...[
-                                  Flexible(
-                                    child: Text(
-                                      " @ $time",
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: TextStyle(
-                                        color: primaryColor.withValues(
-                                          alpha: 0.6,
-                                        ),
-                                        fontSize: 10.sp,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ],
+                          decoration: BoxDecoration(
+                            color: primaryColor,
+                            borderRadius: BorderRadius.circular(8.r),
+                          ),
+                          child: Text(
+                            outcome.toUpperCase(),
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 9.sp,
+                              fontWeight: FontWeight.bold,
+                              letterSpacing: 0.5,
                             ),
                           ),
-                        ],
+                        ),
+                      ],
+                    ),
+                    Divider(height: 24.h, color: Colors.grey.shade100),
+                    // Project Info
+                    Text(
+                      projectName,
+                      style: TextStyle(
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black87,
                       ),
                     ),
-                    Padding(
-                      padding: EdgeInsets.all(16.r),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text(
-                            clientName,
-                            textAlign: TextAlign.center,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                              fontSize: 16.sp,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black87,
-                            ),
+                    SizedBox(height: 4.h),
+                    Row(
+                      children: [
+                        Text(
+                          "Budget: ",
+                          style: TextStyle(
+                            fontSize: 11.sp,
+                            color: Colors.grey.shade500,
                           ),
-                          SizedBox(height: 4.h),
-                          Text(
-                            projectName,
-                            textAlign: TextAlign.center,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                              fontSize: 12.sp,
-                              fontWeight: FontWeight.w600,
-                              color: primaryColor,
-                            ),
+                        ),
+                        Text(
+                          budget,
+                          style: TextStyle(
+                            fontSize: 11.sp,
+                            fontWeight: FontWeight.bold,
+                            color: primaryColor,
                           ),
-                          SizedBox(height: 12.h),
-                          // Project Budget Highlight
-                          Container(
-                            padding: EdgeInsets.symmetric(
-                              horizontal: 16.w,
-                              vertical: 6.h,
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 12.h),
+                    // Summary Block
+                    Container(
+                      width: double.infinity,
+                      padding: EdgeInsets.all(12.r),
+                      decoration: BoxDecoration(
+                        color: Colors.grey.shade50,
+                        borderRadius: BorderRadius.circular(12.r),
+                      ),
+                      child: Text(
+                        summary,
+                        style: TextStyle(
+                          fontSize: 13.sp,
+                          color: Colors.black54,
+                          height: 1.4,
+                        ),
+                      ),
+                    ),
+                    // Meeting Logistics (if applicable)
+                    if (meetingType != 'Call' &&
+                        (location.isNotEmpty || meetingPlatform.isNotEmpty))
+                      Padding(
+                        padding: EdgeInsets.only(top: 12.h),
+                        child: Row(
+                          children: [
+                            Icon(
+                              meetingType == 'Direct Meeting'
+                                  ? Icons.place_outlined
+                                  : Icons.sensors_rounded,
+                              size: 16.r,
+                              color: accentColor,
                             ),
-                            decoration: BoxDecoration(
-                              color: Colors.amber.shade50,
-                              borderRadius: BorderRadius.circular(10.r),
-                              border: Border.all(color: Colors.amber.shade200),
-                            ),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Text(
-                                  "PROJECT BUDGET: ",
-                                  style: TextStyle(
-                                    fontSize: 9.sp,
-                                    fontWeight: FontWeight.w900,
-                                    color: Colors.amber.shade900,
-                                    letterSpacing: 0.5,
-                                  ),
+                            SizedBox(width: 8.w),
+                            Expanded(
+                              child: Text(
+                                meetingType == 'Direct Meeting'
+                                    ? location
+                                    : meetingPlatform,
+                                style: TextStyle(
+                                  fontSize: 12.sp,
+                                  color: accentColor,
+                                  fontWeight: FontWeight.w600,
                                 ),
-                                Text(
-                                  budget,
-                                  style: TextStyle(
-                                    fontSize: 11.sp,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black87,
-                                  ),
-                                ),
-                              ],
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                              ),
                             ),
+                          ],
+                        ),
+                      ),
+                    // Next Follow-up Block
+                    if (nextDate.isNotEmpty) ...[
+                      SizedBox(height: 16.h),
+                      Container(
+                        padding: EdgeInsets.all(12.r),
+                        decoration: BoxDecoration(
+                          color: primaryColor.withValues(alpha: 0.05),
+                          borderRadius: BorderRadius.circular(12.r),
+                          border: Border.all(
+                            color: primaryColor.withValues(alpha: 0.1),
                           ),
-                          SizedBox(height: 16.h),
-                          // Logistics Block
-                          if (meetingType != 'Call')
+                        ),
+                        child: Row(
+                          children: [
                             Container(
-                              padding: EdgeInsets.all(10.r),
-                              margin: EdgeInsets.only(bottom: 16.h),
+                              padding: EdgeInsets.all(6.r),
                               decoration: BoxDecoration(
-                                color: const Color(0xFFF8F9FA),
-                                borderRadius: BorderRadius.circular(10.r),
+                                color: primaryColor.withValues(alpha: 0.1),
+                                shape: BoxShape.circle,
                               ),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Icon(
-                                    meetingType == 'Direct Meeting'
-                                        ? Icons.place_rounded
-                                        : Icons.sensors_rounded,
-                                    size: 14.r,
-                                    color: primaryColor,
-                                  ),
-                                  SizedBox(width: 8.w),
-                                  Expanded(
-                                    child: Text(
-                                      meetingType == 'Direct Meeting'
-                                          ? location
-                                          : meetingLink,
-                                      textAlign: TextAlign.center,
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: TextStyle(
-                                        fontSize: 11.sp,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.grey.shade600,
-                                      ),
-                                    ),
-                                  ),
-                                ],
+                              child: Icon(
+                                Icons.refresh_rounded,
+                                size: 14.r,
+                                color: primaryColor,
                               ),
                             ),
-                          // Key Summary
-                          Text(
-                            summary,
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontSize: 13.sp,
-                              color: Colors.grey.shade700,
-                              height: 1.4,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                          SizedBox(height: 16.h),
-                          // NEXT FOLLOW-UP SECTION
-                          if (nextDate.isNotEmpty)
-                            Container(
-                              padding: EdgeInsets.all(12.r),
-                              decoration: BoxDecoration(
-                                color: primaryColor.withValues(alpha: 0.05),
-                                borderRadius: BorderRadius.circular(16.r),
-                                border: Border.all(
-                                  color: primaryColor.withValues(alpha: 0.1),
-                                ),
-                              ),
+                            SizedBox(width: 12.w),
+                            Expanded(
                               child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    'SCHEDULED FOLLOW-UP',
+                                    "NEXT FOLLOW-UP",
                                     style: TextStyle(
-                                      color: primaryColor,
-                                      fontSize: 9.sp,
+                                      fontSize: 8.sp,
                                       fontWeight: FontWeight.w900,
-                                      letterSpacing: 1.2,
+                                      color: primaryColor,
+                                      letterSpacing: 1.5,
                                     ),
                                   ),
-                                  SizedBox(height: 12.h),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    children: [
-                                      _buildFollowUpSmallInfo('MODE', nextMode),
-                                      _buildFollowUpSmallInfo('DATE', nextDate),
-                                      _buildFollowUpSmallInfo('TIME', nextTime),
-                                    ],
+                                  SizedBox(height: 2.h),
+                                  Text(
+                                    "$nextDate @ $nextTime ($nextMode)",
+                                    style: TextStyle(
+                                      fontSize: 11.sp,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black87,
+                                    ),
                                   ),
                                 ],
                               ),
                             ),
-                          SizedBox(height: 20.h),
-                          // Centered Outcome Badge
-                          Container(
-                            padding: EdgeInsets.symmetric(
-                              horizontal: 24.w,
-                              vertical: 8.h,
-                            ),
-                            decoration: BoxDecoration(
-                              color: primaryColor,
-                              borderRadius: BorderRadius.circular(30.r),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: primaryColor.withValues(alpha: 0.2),
-                                  blurRadius: 8.r,
-                                  offset: Offset(0, 4.h),
-                                ),
-                              ],
-                            ),
-                            child: Text(
-                              outcome.toUpperCase(),
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 9.sp,
-                                letterSpacing: 1,
-                              ),
-                            ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
+                    ],
                   ],
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
-    );
-  }
-
-  Widget _buildFollowUpSmallInfo(String label, String value) {
-    return Column(
-      children: [
-        Text(
-          label,
-          style: TextStyle(
-            color: const Color(0xFF26A69A).withValues(alpha: 0.6),
-            fontSize: 7.sp,
-            fontWeight: FontWeight.w900,
-            letterSpacing: 1,
-          ),
-        ),
-        SizedBox(height: 4.h),
-        Text(
-          value,
-          style: TextStyle(
-            fontSize: 10.sp,
-            fontWeight: FontWeight.bold,
-            color: Colors.black87,
-          ),
-        ),
-      ],
     );
   }
 }

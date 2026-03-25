@@ -227,26 +227,20 @@ class _SplashScreenState extends State<SplashScreen> {
               Image.asset('assets/images/smart.png', width: screenWidth * 0.6),
               const SizedBox(height: 10),
               const SizedBox(height: 40),
-              if (_isLoading) ...[
-                const CircularProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation<Color>(Color(0xFF26A69A)),
-                ),
-                const SizedBox(height: 20),
-              ],
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 40),
-                child: Text(
-                  _statusMessage,
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.grey,
-                  ),
-                ),
-              ),
               if (!_isLoading &&
                   _statusMessage.toLowerCase().contains("retry")) ...[
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 40),
+                  child: Text(
+                    _statusMessage,
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.grey,
+                    ),
+                  ),
+                ),
                 const SizedBox(height: 20),
                 const Icon(Icons.refresh, color: Color(0xFF26A69A), size: 30),
               ],

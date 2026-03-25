@@ -95,14 +95,6 @@ class _EnquiryFollowUpScreenState extends State<EnquiryFollowUpScreen> {
                               horizontal: 16.w,
                               vertical: 8.h,
                             ),
-                            child: Text(
-                              'Follow up Enquiry (${_enquiries.length})',
-                              style: TextStyle(
-                                fontSize: 18.sp,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black,
-                              ),
-                            ),
                           ),
                           Expanded(
                             child: ListView.builder(
@@ -160,7 +152,10 @@ class _EnquiryFollowUpScreenState extends State<EnquiryFollowUpScreen> {
                       color:
                           f == 'Follow up' ? const Color(0xFF26A69A) : Colors.white,
                       borderRadius: BorderRadius.circular(25.r),
-                      border: Border.all(color: const Color(0xFF26A69A)),
+                      border: Border.all(
+                        color: const Color(0xFF26A69A),
+                        width: 1.5.r,
+                      ),
                     ),
                     child: Text(
                       f,

@@ -31,21 +31,13 @@ class _ReferralNewScreenState extends State<ReferralNewScreen> {
       final today = DateTime.now().toString().split(' ')[0];
       if (mounted) {
         setState(() {
-          _referrals = res.where((e) {
-            final date = (e['enquiry_date'] ?? e['entry_date'] ?? '').toString();
-            return date.startsWith(today);
-          }).toList();
-
-          // Add hardcoded example data
-          _referrals.insert(0, {
-            'le_name': 'Arun Kumar',
-            'mobile_1': '98756 32123',
-            'mobile_2': '98756 32123',
-            'product_service': 'Micro fin soft',
-            'email': 'crmapp@gmail.com',
-            'enquiry_date': today,
-            'id': 'mock_rn1',
-          });
+          _referrals = List<dynamic>.from(
+            res.where((e) {
+              final date = (e['enquiry_date'] ?? e['entry_date'] ?? '')
+                  .toString();
+              return date.startsWith(today);
+            }),
+          );
         });
       }
     } finally {
@@ -91,37 +83,29 @@ class _ReferralNewScreenState extends State<ReferralNewScreen> {
                     child: CircularProgressIndicator(color: Color(0xFF26A69A)),
                   )
                 : _referrals.isEmpty
-                    ? const Center(child: Text("No new referrals today"))
-                    : Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.symmetric(
-                              horizontal: 16.w,
-                              vertical: 8.h,
-                            ),
-                            child: Text(
-                              'Today Referral (${_referrals.length})',
-                              style: TextStyle(
-                                fontSize: 18.sp,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black,
-                              ),
-                            ),
-                          ),
-                          Expanded(
-                            child: ListView.builder(
-                              padding: EdgeInsets.symmetric(horizontal: 16.w),
-                              itemCount: _referrals.length,
-                              itemBuilder: (c, i) => LeadRowCard(
-                                lead: _referrals[i],
-                                showStatus: false,
-                                onCall: () => _confirmCall(context, _referrals[i]),
-                              ),
-                            ),
-                          ),
-                        ],
+                ? const Center(child: Text("No new referrals today"))
+                : Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 16.w,
+                          vertical: 8.h,
+                        ),
                       ),
+                      Expanded(
+                        child: ListView.builder(
+                          padding: EdgeInsets.symmetric(horizontal: 16.w),
+                          itemCount: _referrals.length,
+                          itemBuilder: (c, i) => LeadRowCard(
+                            lead: _referrals[i],
+                            showStatus: false,
+                            onCall: () => _confirmCall(context, _referrals[i]),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
           ),
         ],
       ),
@@ -145,14 +129,16 @@ class _ReferralNewScreenState extends State<ReferralNewScreen> {
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
-                            builder: (c) => const ReferralFollowUpScreen()),
+                          builder: (c) => const ReferralFollowUpScreen(),
+                        ),
                       );
                     }
                     if (f == 'Meeting') {
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
-                            builder: (c) => const ReferralMeetingScreen()),
+                          builder: (c) => const ReferralMeetingScreen(),
+                        ),
                       );
                     }
                   },
@@ -162,14 +148,18 @@ class _ReferralNewScreenState extends State<ReferralNewScreen> {
                       vertical: 8.h,
                     ),
                     decoration: BoxDecoration(
-                      color: f == 'New' ? const Color(0xFF26A69A) : Colors.white,
+                      color: f == 'New'
+                          ? const Color(0xFF26A69A)
+                          : Colors.white,
                       borderRadius: BorderRadius.circular(25.r),
                       border: Border.all(color: const Color(0xFF26A69A)),
                     ),
                     child: Text(
                       f,
                       style: TextStyle(
-                        color: f == 'New' ? Colors.white : const Color(0xFF26A69A),
+                        color: f == 'New'
+                            ? Colors.white
+                            : const Color(0xFF26A69A),
                         fontWeight: FontWeight.w500,
                         fontSize: 14.sp,
                       ),
@@ -183,7 +173,7 @@ class _ReferralNewScreenState extends State<ReferralNewScreen> {
     );
   }
 
-  void _confirmCall(BuildContext context, Map<String, dynamic> lead) {
+  void _confirmCall(BuildContext context, dynamic lead) {
     showModalBottomSheet(
       context: context,
       backgroundColor: Colors.transparent,
